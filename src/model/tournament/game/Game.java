@@ -1,7 +1,6 @@
 package model.tournament.game;
 
 import model.Player;
-import model.Team;
 
 import java.util.LinkedHashSet;
 import java.util.List;

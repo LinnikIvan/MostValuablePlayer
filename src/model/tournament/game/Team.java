@@ -1,4 +1,6 @@
-package model;
+package model.tournament.game;
+
+import model.Player;
 
 import java.util.HashSet;
 import java.util.Objects;
