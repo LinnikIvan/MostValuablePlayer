@@ -11,6 +11,6 @@ public class TournamentGenerator {
         //...
         //
         //create set of csv files
-        //10% chance to create wrong file
+        //10% chance to create wrong format file
     }
 }

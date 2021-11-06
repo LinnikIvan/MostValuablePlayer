@@ -1,18 +1,18 @@
 package model.tournament.game;
 
 import model.Player;
-import model.Team;
 
-public class BasketballGame extends Game {
+import java.util.List;
 
-    public BasketballGame() {
-//        this.winningCriteria = WinningCriteria.HIGHEST_SCORED_POINTS;
-//        System.out.println("create basketball game");
+public class BasketballGame extends HighestScoredPointsGame {
+
+    public BasketballGame(List<String> playersStats) {
+        super(playersStats);
     }
-
 
     @Override
     protected void createPlayers() {
+//        System.out.println("create players");
         for (String playerStats : playersStats) {
             String[] stats = playerStats.split(";");
             String name = stats[0];
@@ -25,28 +25,15 @@ public class BasketballGame extends Game {
             players.add(new BasketballPlayer
                     (name, nickName, number, teamName, scoredPoints, rebounds, assists));
         }
+//        System.out.println(players);
     }
-
-    @Override
-    protected void createTeams() {
-
-    }
-
-    @Override
-    protected void defineWinnerTeam() {
-    }
-}
-
-class BasketballTeam extends Team {
 
 }
 
 class BasketballPlayer extends Player {
-    //    player 1;nick1;4;Team A;10;2;7
-    private int scoredPoints;
-    private int rebounds;
-    private int assists;
-
+    private final int scoredPoints;
+    private final int rebounds;
+    private final int assists;
 
     public BasketballPlayer(String name,
                             String nickname,
@@ -59,7 +46,7 @@ class BasketballPlayer extends Player {
         this.scoredPoints = scoredPoints;
         this.rebounds = rebounds;
         this.assists = assists;
-        System.out.println(this);
+//        System.out.println(this);
     }
 
     @Override
@@ -76,7 +63,4 @@ class BasketballPlayer extends Player {
                 '}';
     }
 
-    //    private BasketballPlayer(String name, String nickname, int number, String teamName) {
-//        super(name, nickname, number, teamName);
-//    }
 }

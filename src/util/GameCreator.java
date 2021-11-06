@@ -12,16 +12,14 @@ public class GameCreator {
         Game game;
         switch (GameType.valueOf(gameType)) {
             case BASKETBALL:
-                game = new BasketballGame();
+                game = new BasketballGame(playersStats);
                 break;
             case HANDBALL:
-                game = new HandballGame();
+                game = new HandballGame(playersStats);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + gameType);
         }
-
-        game.setPlayersStats(playersStats);
         return game;
     }
 }
