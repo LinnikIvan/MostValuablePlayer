@@ -5,14 +5,12 @@ import model.Team;
 import model.tournament.game.Game;
 import util.GameCreator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Tournament {
-    private List<Game> games = new ArrayList<>();
-    private List<Team> teams = new ArrayList<>();
-    private List<Player> players = new ArrayList<>();
+    private final List<Game> games = new ArrayList<>();
+    private final Set<Team> teams = new HashSet<>();
+    private final Set<Player> players = new HashSet<>();
 
     private Player mostValuablePlayer;
 
@@ -34,6 +32,16 @@ public class Tournament {
 //            System.out.println(value);
             games.add(gameCreator.createGame(key, value));
         }
+
+        for (Game game : games) {
+            teams.addAll(game.getTeams());
+            players.addAll(game.getPlayers());
+        }
+
+        for (Game game : games) {
+            game.playGame();
+        }
+
 
 
     }

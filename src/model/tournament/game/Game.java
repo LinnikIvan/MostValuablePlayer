@@ -1,42 +1,47 @@
 package model.tournament.game;
 
+import model.Player;
 import model.Team;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class Game implements Playable {
-    protected WinningCriteria winningCriteria;
+public abstract class Game {
+    //    protected WinningCriteria winningCriteria;
     protected final Set<Team> teams = new HashSet<>(2);
-    List<String> playerStats;
+    protected Set<Player> players = new HashSet<>();
+    protected List<String> playersStats;
 
-    public void setPlayersStats(List<String> playerStats) {
-        this.playerStats = playerStats;
-        for (String stats : playerStats) {
-            System.out.print("\"" + stats + "\"" + ":");
-        }
-        System.out.println();
-//        List<String> stats = new ArrayList<>();
-//        String[] stats = playerStats
-//        stats.addAll();
+    public void setPlayersStats(List<String> playersStats) {
+        this.playersStats = playersStats;
+
+//        for (String stats : playersStats) System.out.println(stats);
     }
 
-    @Override
-    public Team defineWinnerTeam() {
-        return null;
+    protected abstract void createPlayers();
+
+    protected abstract void createTeams();
+
+    protected abstract void defineWinnerTeam();
+
+    public Set<Team> getTeams() {
+        return teams;
     }
 
-
-    public Game playTheGame(GameType gameType) {
-        Game game = null;
-
-//      do the methods
-
-//        game.defineWinnerTeam();
-
-        return game;
+    public Set<Player> getPlayers() {
+        return players;
     }
 
+    public void playGame() {
+        createPlayers();
+        createTeams();
+        defineWinnerTeam();
+    }
 }
 
+////TODO remove criteria. its may be unneeded
+//enum WinningCriteria {
+//    HIGHEST_SCORED_POINTS,
+//    MOST_GOALS_MADE
+//}

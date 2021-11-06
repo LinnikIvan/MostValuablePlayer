@@ -2,7 +2,6 @@ package util;
 
 import model.tournament.game.BasketballGame;
 import model.tournament.game.Game;
-import model.tournament.game.GameType;
 import model.tournament.game.HandballGame;
 
 import java.util.List;
@@ -25,4 +24,9 @@ public class GameCreator {
         game.setPlayersStats(playersStats);
         return game;
     }
+}
+
+enum GameType {
+    BASKETBALL,
+    HANDBALL
 }

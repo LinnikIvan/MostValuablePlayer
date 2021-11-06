@@ -8,6 +8,7 @@ import java.util.Map;
 public class GamesHost {
     public static void main(String[] args) {
         Tournament tournament = new Tournament();
+        boolean isWrongFilesFormat = false;
 
         System.out.println("The game will start soon\n");
 
@@ -15,13 +16,17 @@ public class GamesHost {
         try {
             tournamentInfo = Reader.readFilesSet("resources");
         } catch (WrongFilesFormatException e) {
-            //TODO not calculate MVP
+            isWrongFilesFormat = true;
             e.printStackTrace();
         }
 
-        tournament.playGames(tournamentInfo);
+        if (!isWrongFilesFormat) {
+            tournament.playGames(tournamentInfo);
+            System.out.println("\nThe most valuable player is " + tournament.getMostValuablePlayer());
+        } else {
+            System.out.println("Sorry, this tournament will not calculate the MVP." +
+                    "Check the input data.");
+        }
 
-
-        System.out.println("\nThe most valuable player is " + tournament.getMostValuablePlayer());
     }
 }
