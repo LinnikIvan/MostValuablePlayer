@@ -3,14 +3,13 @@ package model.tournament.game;
 import model.Player;
 import model.Team;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 public abstract class Game {
     protected WinningCriteria winningCriteria;
-    protected final Set<Team> teams = new HashSet<>(2);
+    protected final Set<Team> teams = new LinkedHashSet<>(2);
     protected Set<Player> players = new LinkedHashSet<>();
     protected List<String> playersStats;
 
@@ -27,33 +26,30 @@ public abstract class Game {
     protected abstract void createPlayers();
 
     protected void createTeams() {
-        System.out.println("create teams");
-        Team newTeam;
         for (Player player : players) {
-//            System.out.println(player);
-            newTeam = new Team(player.getTeamName());
-            teams.add(newTeam);
-
-            for (Team existingTeam : teams) {
-                existingTeam.addPlayer(player);
-            }
-
+            teams.add(new Team(player.getTeamName()));
+            teams.forEach(existingTeam -> existingTeam.addPlayer(player));
         }
-
-        for (Team t : teams) {
-            System.out.println(t.getName());
-            for (Player player : t.getPlayers()) {
-                System.out.println(player);
-            }
-        }
-
-//        System.out.println(teams);
     }
 
-    protected abstract void defineWinnerTeam();
+    protected void defineWinnerTeam() {
+        Team winnerTeam = null;
+        int winnerTeamPoints = 0;
 
-    public Set<Team> getTeams() {
-        return teams;
+        for (Team currentTeam : teams) {
+            int currentTeamPoints = 0;
+
+            for (Player player : currentTeam.getPlayers()) {
+                currentTeamPoints += player.getTeamEffectivePoints();
+            }
+
+            if (currentTeamPoints > winnerTeamPoints) {
+                winnerTeamPoints = currentTeamPoints;
+                winnerTeam = currentTeam;
+            }
+
+        }
+        System.out.println(getClass().getSimpleName() + " winner: " + winnerTeam.getName() + " - " + winnerTeamPoints);
     }
 
     public Set<Player> getPlayers() {
@@ -75,28 +71,6 @@ abstract class HighestScoredPointsGame extends Game {
         super(playersStats);
     }
 
-    @Override
-    protected void defineWinnerTeam() {
-        Team winnerTeam = null;
-        int winnerTeamPoints = 0;
-
-        for (Team currentTeam : teams) {
-            if (winnerTeam == null) winnerTeam = currentTeam;
-            int currentTeamPoints = 0;
-
-            for (Player player : players) {
-//                currentTeamPoints += player.getTeamWinningPoints();
-            }
-
-            if (currentTeamPoints > winnerTeamPoints) {
-                winnerTeamPoints = currentTeamPoints;
-                winnerTeam = currentTeam;
-            }
-        }
-
-
-    }
-
 }
 
 abstract class MostGoalsMadeGame extends Game {
@@ -108,8 +82,4 @@ abstract class MostGoalsMadeGame extends Game {
         super(playersStats);
     }
 
-    @Override
-    protected void defineWinnerTeam() {
-
-    }
 }

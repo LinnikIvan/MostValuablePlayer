@@ -4,7 +4,7 @@ import model.Player;
 
 import java.util.List;
 
-public class HandballGame extends Game {
+public class HandballGame extends MostGoalsMadeGame {
 
     public HandballGame(List<String> playersStats) {
         super(playersStats);
@@ -27,9 +27,6 @@ public class HandballGame extends Game {
 //        System.out.println(players);
     }
 
-    @Override
-    protected void defineWinnerTeam() {
-    }
 }
 
 class HandballPlayer extends Player {
@@ -60,5 +57,10 @@ class HandballPlayer extends Player {
                 ", goalsMade=" + goalsMade +
                 ", goalsReceived=" + goalsReceived +
                 '}';
+    }
+
+    @Override
+    public int getTeamEffectivePoints() {
+        return goalsMade;
     }
 }

@@ -9,10 +9,6 @@ public abstract class Player {
     protected final String teamName;
     protected int ratingPoints;
 
-    //
-    private int scoredPoints;
-    private int goalsMade;
-
     protected Player(String name, String nickname, int number, String teamName) {
         this.name = name;
         this.nickname = nickname;
@@ -36,14 +32,6 @@ public abstract class Player {
         return teamName;
     }
 
-    public int getScoredPoints() {
-        return scoredPoints;
-    }
-
-    public int getGoalsMade() {
-        return goalsMade;
-    }
-
     public int getRatingPoints() {
         return ratingPoints;
     }
@@ -65,4 +53,5 @@ public abstract class Player {
         return Objects.hash(getNickname());
     }
 
+    public abstract int getTeamEffectivePoints();
 }

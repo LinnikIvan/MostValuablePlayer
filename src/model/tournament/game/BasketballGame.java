@@ -12,7 +12,6 @@ public class BasketballGame extends HighestScoredPointsGame {
 
     @Override
     protected void createPlayers() {
-//        System.out.println("create players");
         for (String playerStats : playersStats) {
             String[] stats = playerStats.split(";");
             String name = stats[0];
@@ -25,7 +24,6 @@ public class BasketballGame extends HighestScoredPointsGame {
             players.add(new BasketballPlayer
                     (name, nickName, number, teamName, scoredPoints, rebounds, assists));
         }
-//        System.out.println(players);
     }
 
 }
@@ -46,7 +44,18 @@ class BasketballPlayer extends Player {
         this.scoredPoints = scoredPoints;
         this.rebounds = rebounds;
         this.assists = assists;
-//        System.out.println(this);
+    }
+
+    public int getScoredPoints() {
+        return scoredPoints;
+    }
+
+    public int getRebounds() {
+        return rebounds;
+    }
+
+    public int getAssists() {
+        return assists;
     }
 
     @Override
@@ -63,4 +72,8 @@ class BasketballPlayer extends Player {
                 '}';
     }
 
+    @Override
+    public int getTeamEffectivePoints() {
+        return scoredPoints;
+    }
 }

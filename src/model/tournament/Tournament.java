@@ -1,7 +1,6 @@
 package model.tournament;
 
 import model.Player;
-import model.Team;
 import model.tournament.game.Game;
 import util.GameCreator;
 
@@ -9,7 +8,7 @@ import java.util.*;
 
 public class Tournament {
     private final List<Game> games = new ArrayList<>();
-//    private final Set<Team> teams = new HashSet<>();
+    //    private final Set<Team> teams = new HashSet<>();
     private final Set<Player> players = new HashSet<>();
 
     private final GameCreator gameCreator = new GameCreator();
@@ -45,7 +44,6 @@ public class Tournament {
 
         return mostValuablePlayer;
     }
-
 
 
     public Player getMostValuablePlayer() {
