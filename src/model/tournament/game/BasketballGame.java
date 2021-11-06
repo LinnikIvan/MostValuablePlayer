@@ -11,6 +11,20 @@ public class BasketballGame extends HighestScoredPointsGame {
     }
 
     @Override
+    protected void calculatePlayerRatingPoints() {
+        BasketballPlayer basketballPlayer;
+        for (Player player : players) {
+            basketballPlayer = ((BasketballPlayer) player);
+            player.addRatingPoints(
+                    basketballPlayer.getScoredPoints() * 2 +
+                            basketballPlayer.getRebounds() +
+                            basketballPlayer.getAssists()
+            );
+            System.out.println(player);
+        }
+    }
+
+    @Override
     protected void createPlayers() {
         for (String playerStats : playersStats) {
             String[] stats = playerStats.split(";");

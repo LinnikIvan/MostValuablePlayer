@@ -10,7 +10,7 @@ public class GamesHost {
         Tournament tournament = new Tournament();
         boolean isWrongFilesFormat = false;
 
-//        System.out.println("The game will start soon\n");
+        System.out.println("The game will start soon\n");
 
         Map<String, List<String>> tournamentInfo = null;
         try {
@@ -22,7 +22,7 @@ public class GamesHost {
 
         if (!isWrongFilesFormat) {
             tournament.playGames(tournamentInfo);
-//            System.out.println("\nThe most valuable player is " + tournament.getMostValuablePlayer());
+            System.out.println("\nThe most valuable player is " + tournament.getMostValuablePlayer());
         } else {
             System.out.println("Sorry, this tournament will not calculate the MVP." +
                     "Check the input data.");

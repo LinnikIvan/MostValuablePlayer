@@ -4,12 +4,14 @@ import model.Player;
 import model.tournament.game.Game;
 import util.GameCreator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Tournament {
     private final List<Game> games = new ArrayList<>();
-    //    private final Set<Team> teams = new HashSet<>();
-    private final Set<Player> players = new HashSet<>();
+    private final Map<String, Player> players = new LinkedHashMap<>();
 
     private final GameCreator gameCreator = new GameCreator();
 
@@ -29,25 +31,64 @@ public class Tournament {
         games.forEach(Game::playGame);
 
         for (Game game : games) {
-            //todo add player in tournament in other way
-            players.addAll(game.getPlayers());
+            for (Player player : game.getPlayers()) {
+                String nick = player.getNickname();
+                Player tournamentPlayer;
+                if (!players.containsKey(nick)) {
+                    tournamentPlayer = new TournamentPlayer(
+                            player.getName(),
+                            player.getNickname(),
+                            player.getNumber(),
+                            player.getTeamName());
+
+                    tournamentPlayer.addRatingPoints(player.getRatingPoints());
+                    players.put(nick, tournamentPlayer);
+                } else {
+                    tournamentPlayer = players.get(nick);
+                    tournamentPlayer.addRatingPoints(player.getRatingPoints());
+                }
+            }
+
         }
 
         defineMVP();
-
-
     }
 
-    private Player defineMVP() {
+    private void defineMVP() {
+        for (Player player : players.values()) {
+            System.out.println(player);
 
-        //calculating
+            if (mostValuablePlayer == null) mostValuablePlayer = player;
 
-        return mostValuablePlayer;
+            if (player.getRatingPoints() > mostValuablePlayer.getRatingPoints())
+                mostValuablePlayer = player;
+        }
     }
-
 
     public Player getMostValuablePlayer() {
         return mostValuablePlayer;
     }
 
+}
+
+class TournamentPlayer extends Player {
+    protected TournamentPlayer(String name, String nickname, int number, String teamName) {
+        super(name, nickname, number, teamName);
+    }
+
+    @Override
+    public int getTeamEffectivePoints() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String toString() {
+        return "TournamentPlayer{" +
+                "name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", number=" + number +
+                ", teamName='" + teamName + '\'' +
+                ", ratingPoints=" + ratingPoints +
+                '}';
+    }
 }

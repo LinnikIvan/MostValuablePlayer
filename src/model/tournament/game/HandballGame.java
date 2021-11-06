@@ -5,14 +5,25 @@ import model.Player;
 import java.util.List;
 
 public class HandballGame extends MostGoalsMadeGame {
-
     public HandballGame(List<String> playersStats) {
         super(playersStats);
     }
 
     @Override
+    protected void calculatePlayerRatingPoints() {
+        HandballPlayer handballPlayer;
+        for (Player player : players) {
+            handballPlayer = ((HandballPlayer) player);
+            player.addRatingPoints(
+                    handballPlayer.getGoalsMade() * 2 -
+                            ((HandballPlayer) player).getGoalsReceived()
+            );
+            System.out.println(player);
+        }
+    }
+
+    @Override
     protected void createPlayers() {
-//        System.out.println("create players");
         for (String playerStats : playersStats) {
             String[] stats = playerStats.split(";");
             String name = stats[0];
@@ -24,13 +35,10 @@ public class HandballGame extends MostGoalsMadeGame {
             players.add(new HandballPlayer
                     (name, nickName, number, teamName, goalsMade, goalsReceived));
         }
-//        System.out.println(players);
     }
-
 }
 
 class HandballPlayer extends Player {
-    //    player 1;nick1;4;Team A;0;20
     private final int goalsMade;
     private final int goalsReceived;
 
@@ -43,7 +51,14 @@ class HandballPlayer extends Player {
         super(name, nickname, number, teamName);
         this.goalsMade = goalsMade;
         this.goalsReceived = goalsReceived;
-//        System.out.println(this);
+    }
+
+    public int getGoalsMade() {
+        return goalsMade;
+    }
+
+    public int getGoalsReceived() {
+        return goalsReceived;
     }
 
     @Override
