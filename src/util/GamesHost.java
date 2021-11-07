@@ -24,7 +24,7 @@ public class GamesHost {
             tournament.playGames(tournamentInfo);
             System.out.println("\nThe most valuable player is " + tournament.getMostValuablePlayer());
         } else {
-            System.out.println("Sorry, this tournament will not calculate the MVP." +
+            System.out.println("Sorry, this tournament will not calculate the MVP. " +
                     "Check the input data.");
         }
 

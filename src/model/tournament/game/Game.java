@@ -34,7 +34,6 @@ public abstract class Game {
         }
     }
 
-    //    TODO every game must have a winner team
     protected void defineWinnerTeam() {
         Team winnerTeam = null;
         int winnerTeamPoints = 0;
