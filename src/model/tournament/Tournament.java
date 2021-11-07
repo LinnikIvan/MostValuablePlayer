@@ -12,24 +12,31 @@ import java.util.Map;
 public class Tournament {
     private final List<Game> games = new ArrayList<>();
     private final Map<String, Player> players = new LinkedHashMap<>();
-
     private final GameCreator gameCreator = new GameCreator();
-
     private Player mostValuablePlayer;
 
-    public void playGames(Map<String, List<String>> initialData) {
-        if (initialData == null) {
-            System.out.println("No data for tournament");
-        }
+    public void playTournament(Map<String, List<String>> initialData) {
+        if (initialData == null) System.out.println("No data for tournament");
 
+        createGames(initialData);
+        playGames();
+        calculateEachPlayerTotalRating();
+        defineMVP();
+    }
+
+    private void createGames(Map<String, List<String>> initialData) {
         for (Map.Entry<String, List<String>> entry : initialData.entrySet()) {
-            String key = entry.getKey();
-            List<String> value = entry.getValue();
-            games.add(gameCreator.createGame(key, value));
+            String gameType = entry.getKey();
+            List<String> playersStats = entry.getValue();
+            games.add(gameCreator.createGame(gameType, playersStats));
         }
+    }
 
+    private void playGames() {
         games.forEach(Game::playGame);
+    }
 
+    private void calculateEachPlayerTotalRating() {
         for (Game game : games) {
             for (Player player : game.getPlayers()) {
                 String nick = player.getNickname();
@@ -40,7 +47,6 @@ public class Tournament {
                             player.getNickname(),
                             player.getNumber(),
                             player.getTeamName());
-
                     tournamentPlayer.addRatingPoints(player.getRatingPoints());
                     players.put(nick, tournamentPlayer);
                 } else {
@@ -48,16 +54,11 @@ public class Tournament {
                     tournamentPlayer.addRatingPoints(player.getRatingPoints());
                 }
             }
-
         }
-
-        defineMVP();
     }
 
     private void defineMVP() {
         for (Player player : players.values()) {
-            System.out.println(player);
-
             if (mostValuablePlayer == null) mostValuablePlayer = player;
 
             if (player.getRatingPoints() > mostValuablePlayer.getRatingPoints())
@@ -68,7 +69,6 @@ public class Tournament {
     public Player getMostValuablePlayer() {
         return mostValuablePlayer;
     }
-
 }
 
 class TournamentPlayer extends Player {

@@ -1,6 +1,9 @@
 package util;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class Reader {
@@ -8,8 +11,8 @@ public class Reader {
     public static Map<String, List<String>> readFilesSet(String CSVFilesPath) throws WrongFilesFormatException {
         Map<String, List<String>> games = new HashMap<>();
 
-        File[] files = new File(CSVFilesPath).listFiles();
-        for (File file : files) {
+        File[] receivedFiles = new File(CSVFilesPath).listFiles();
+        for (File file : receivedFiles) {
             Queue<String> resultOfReading = new LinkedList<>();
             if (!file.getName().endsWith("csv")) throw new WrongFilesFormatException();
 
@@ -18,13 +21,8 @@ public class Reader {
                     resultOfReading.add(reader.readLine());
                 }
                 games.put(resultOfReading.remove(), new ArrayList<>(resultOfReading));
-            } catch (FileNotFoundException e) {
-                System.out.println("File not found");
+            } catch (IOException | IllegalArgumentException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                System.out.println("Something went wrong");
-                e.printStackTrace();
-            } catch (IllegalArgumentException ignored) {
             }
         }
         return games;

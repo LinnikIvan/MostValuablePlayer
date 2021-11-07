@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public abstract class Player {
     protected final String name;
-    protected final String nickname; //TODO must be unique - add validation on files set reading
+    protected final String nickname;
     protected final int number;
     protected final String teamName;
     protected int ratingPoints;
@@ -14,6 +14,12 @@ public abstract class Player {
         this.nickname = nickname;
         this.number = number;
         this.teamName = teamName;
+    }
+
+    public abstract int getTeamEffectivePoints();
+
+    public void addRatingPoints(int points) {
+        ratingPoints += points;
     }
 
     public String getName() {
@@ -47,11 +53,5 @@ public abstract class Player {
     @Override
     public int hashCode() {
         return Objects.hash(getNickname());
-    }
-
-    public abstract int getTeamEffectivePoints();
-
-    public void addRatingPoints(int points) {
-        ratingPoints += points;
     }
 }

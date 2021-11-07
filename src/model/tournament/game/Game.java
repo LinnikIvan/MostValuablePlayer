@@ -16,16 +16,12 @@ public abstract class Game {
         this.playersStats = playersStats;
     }
 
-    protected abstract void calculatePlayerRatingPoints();
-
     public void playGame() {
         createPlayers();
         createTeams();
         defineWinnerTeam();
         calculatePlayerRatingPoints();
     }
-
-    protected abstract void createPlayers();
 
     protected void createTeams() {
         for (Player player : players) {
@@ -49,7 +45,6 @@ public abstract class Game {
                 winnerTeamPoints = currentTeamPoints;
                 winnerTeam = currentTeam;
             }
-
         }
         increaseWinnerPlayersRating(winnerTeam);
         System.out.println(getClass().getSimpleName() + " winner: " + winnerTeam.getName() +
@@ -60,19 +55,11 @@ public abstract class Game {
         team.getPlayers().forEach(player -> player.addRatingPoints(TEAM_WIN_POINTS));
     }
 
+    protected abstract void calculatePlayerRatingPoints();
+
+    protected abstract void createPlayers();
+
     public Set<Player> getPlayers() {
         return players;
-    }
-}
-
-abstract class HighestScoredPointsGame extends Game {
-    public HighestScoredPointsGame(List<String> playersStats) {
-        super(playersStats);
-    }
-}
-
-abstract class MostGoalsMadeGame extends Game {
-    public MostGoalsMadeGame(List<String> playersStats) {
-        super(playersStats);
     }
 }

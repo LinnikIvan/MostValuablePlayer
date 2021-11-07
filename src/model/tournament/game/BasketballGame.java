@@ -4,7 +4,7 @@ import model.Player;
 
 import java.util.List;
 
-public class BasketballGame extends HighestScoredPointsGame {
+public class BasketballGame extends Game {
 
     public BasketballGame(List<String> playersStats) {
         super(playersStats);
@@ -60,6 +60,11 @@ class BasketballPlayer extends Player {
         this.assists = assists;
     }
 
+    @Override
+    public int getTeamEffectivePoints() {
+        return scoredPoints;
+    }
+
     public int getScoredPoints() {
         return scoredPoints;
     }
@@ -84,10 +89,5 @@ class BasketballPlayer extends Player {
                 ", rebounds=" + rebounds +
                 ", assists=" + assists +
                 '}';
-    }
-
-    @Override
-    public int getTeamEffectivePoints() {
-        return scoredPoints;
     }
 }
